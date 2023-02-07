@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 m-2 border-bottom border-1 border-secondary">
+    <form action="/new-visit-form" method="POST">
+
+        <div class="input-group p-2">
+            <label for="pid" class="input-group-text" style="width: 150px;">Client ID</label>
+            <input type="text" id="pid" name="pid" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label class="input-group-text" style="width: 150px;">Date of visit</label>
+            <input type="text" id="dov" name="dov" class="form-control" placeholder="DD">
+            <input type="text" id="mov" name="mov" class="form-control" placeholder="MM">
+            <input type="text" id="yov" name="yov" class="form-control" placeholder="YYYY">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="cc" class="input-group-text" style="width: 150px;">Complaint</label>
+            <input type="text" id="cc" name="cc" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="dx" class="input-group-text" style="width: 150px;">Diagnosis</label>
+            <input type="text" id="dx" name="dx" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="rx1" class="input-group-text" style="width: 150px;">Rx1</label>
+            <input type="text" id="rx1" name="rx1" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="rx2" class="input-group-text" style="width: 150px;">Rx2</label>
+            <input type="text" id="rx2" name="rx2" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="rx3" class="input-group-text" style="width: 150px;">Rx3</label>
+            <input type="text" id="rx3" name="rx3" class="form-control">
+        </div>
+
+        <div class="input-group p-2">
+            <label for="rx4" class="input-group-text" style="width: 150px;">Rx4</label>
+            <input type="text" id="rx4" name="rx4" class="form-control">
+        </div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center p-2">
+            <button type="submit" class="btn btn-primary" style="width: 200px;">Submit</button>
+        </div>
+
+    </form>
+</div>
+{% endblock content %}
