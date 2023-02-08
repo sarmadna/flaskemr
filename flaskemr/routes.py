@@ -1,16 +1,20 @@
 from flask import render_template, request, redirect
 from flaskemr import app, db
 from flaskemr.models import Client, Visit
-import psycopg2
 
 @app.route("/")
 def home():
     return render_template("home.html", title="Home")
 
-@app.route("/all-clients")
+@app.route("/all-clients", methods=["GET", "POST"])
 def allclients():
-    allclients = Client.query.all()
-    return render_template("all-clients.html", title="All Clients", allclients=allclients)
+    all_clients = Client.query.all()
+    if request.method == "POST":
+        fnm = request.form["fnm"]
+        all_clients = Client.query.filter_by(fnm=fnm).all()
+        return render_template("all-clients.html", title="All Clients", all_clients=all_clients)
+
+    return render_template("all-clients.html", title="All Clients", all_clients=all_clients)
 
 @app.route("/new-client")
 def newclient():
@@ -44,6 +48,14 @@ def newclientform():
         db.session.commit()
         return redirect("/new-client")
 
+@app.route("/all-visits", methods=["GET", "POST"])
+def all_visits():
+    if request.method == "POST":
+        pid = request.form["pid"]
+        client = Client.query.filter_by(pid=pid).first()
+        all_visits = Visit.query.filter_by(cid=pid).all()
+        return render_template("all-visits.html", title="All Clients", client=client, all_visits=all_visits)
+
 @app.route("/new-visit")
 def newvisit():
     return render_template("new-visit.html", title="New Visit")
@@ -65,23 +77,3 @@ def newvisitform():
         db.session.add(new_visit)
         db.session.commit()
         return redirect("/new-visit")
-
-@app.route("/search")
-def search():
-    return render_template("/search.html", title="Search")
-
-@app.route("/search-form", methods=["GET", "POST"])
-def searchform():
-    if request.method == "POST":
-        pid = request.form["pid"]
-        fnm = request.form["fnm"]
-        conn = psycopg2.connect(
-            host = "localhost",
-            database = "clinic",
-            user = "postgres",
-            password = "postgres"
-        )
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM client_visit_view WHERE pid = %s", (pid))
-        search_query = cur.fetchall()
-        return render_template("search-results.html", title="Search Result", search_query=search_query)

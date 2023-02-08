@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for client in allclients %}
-<div class="d-flex flex-column bg-white rounded-2 shadow p-2 m-2 border-bottom border-1 border-secondary">
+
+{% for client in all_clients %}
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
     <div class="d-flex flex-row border-bottom border-1">
         <div class="container w-50">
             <div class="d-flex flex-row">
@@ -11,7 +12,10 @@
         </div>
         <div class="container w-50">
             <div class="d-flex flex-row-reverse">
-                *
+                <form action="/all-visits" method="POST">
+                    <input type="text" name="pid" id="pid" class="form-control-sm d-none" value="{{ client.pid }}">
+                    <button type="submit" class="btn btn-sm">Details</button>
+                </form>
             </div>
         </div>
     </div>
