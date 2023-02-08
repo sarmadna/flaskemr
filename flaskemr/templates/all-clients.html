@@ -6,7 +6,7 @@
         <div class="container w-50">
             <div class="d-flex flex-row">
                 <div class="fw-bold text-secondary mx-2">{{ client.pid }}</div>
-                <div class="fw-bold text-primary mx-2">{{ client.fnm+" "+client.lnm }}</div>
+                <div class="fw-bold text-primary mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
             </div>
         </div>
         <div class="container w-50">
@@ -17,9 +17,9 @@
     </div>
     <div class="d-flex flex-row justify-content-center align-items-center">
         <div class="container w-25 text-secondary">SEX: {{ client.sex }}</div>
-        <div class="container w-25 text-secondary">DOB: </div>
-        <div class="container w-25 text-secondary">ADR: </div>
-        <div class="container w-25 text-secondary">MOB: </div>
+        <div class="container w-25 text-secondary">DOB: {{ client.dob }}</div>
+        <div class="container w-25 text-secondary">ADR: {{ client.adr }}</div>
+        <div class="container w-25 text-secondary">MOB: {{ client.mob }}</div>
     </div>
 </div>
 {% endfor %}
