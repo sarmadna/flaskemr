@@ -33,12 +33,12 @@ class Visit(db.Model):
     dov = db.Column(db.Integer, nullable=False)
     mov = db.Column(db.Integer, nullable=False)
     yov = db.Column(db.Integer, nullable=False)
-    cc = db.Column(db.String(50), nullable=False)
-    dx = db.Column(db.String(50), nullable=False)
-    rx1 = db.Column(db.String(50), nullable=False)
-    rx2 = db.Column(db.String(50), nullable=False)
-    rx3 = db.Column(db.String(50), nullable=False)
-    rx4 = db.Column(db.String(50), nullable=False)
+    cc = db.Column(db.String(90), nullable=False)
+    dx = db.Column(db.String(90), nullable=False)
+    rx1 = db.Column(db.String(90), nullable=False)
+    rx2 = db.Column(db.String(90), nullable=False)
+    rx3 = db.Column(db.String(90), nullable=False)
+    rx4 = db.Column(db.String(90), nullable=False)
 
     def __init__(self, cid, dov, mov, yov, cc, dx, rx1, rx2, rx3, rx4):
         self.dov = dov
