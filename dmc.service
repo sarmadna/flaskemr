@@ -1,0 +1,10 @@
+[Unit]
+Description=DMC Dental Clinic Database System
+After=default.target
+
+[Service]
+ExecStart=/usr/bin/bash /data/flaskemr/dmc.sh
+Restart=always
+
+[Install]
+WantedBy=default.target
