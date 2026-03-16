@@ -1,5 +1,7 @@
 from flaskemr import db
 
+
+# --- creates table for clients
 class Client(db.Model):
     __tablename__ = "client"
 
@@ -25,6 +27,8 @@ class Client(db.Model):
     def __repr__(self):
         return f"Client({self.fnm}, {self.mnm}, {self.lnm}, {self.sex}, {self.dob}, {self.adr}, {self.mob})"
 
+
+# --- create table for visits
 class Visit(db.Model):
     __tablename__ = "visit"
 

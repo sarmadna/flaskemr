@@ -6,15 +6,15 @@
     <div class="d-flex flex-row border-bottom border-1">
         <div class="container w-50">
             <div class="d-flex flex-row">
-                <div class="fw-bold text-secondary mx-2">{{ client.pid }}</div>
-                <div class="fw-bold text-primary mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
+                <div class="fs-4 text-secondary mx-2">{{ client.pid }}</div>
+                <div class="fs-4 text-primary mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
             </div>
         </div>
         <div class="container w-50">
             <div class="d-flex flex-row-reverse">
                 <form action="/all-visits" method="POST">
                     <input type="text" name="pid" id="pid" class="form-control-sm d-none" value="{{ client.pid }}">
-                    <button type="submit" class="btn btn-sm">Details</button>
+                    <button type="submit" class="btn btn-sm"><i class="bi bi-info-square fs-4"></i></button>
                 </form>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="container w-25 text-secondary">SEX: {{ client.sex }}</div>
         <div class="container w-25 text-secondary">DOB: {{ client.dob }}</div>
         <div class="container w-25 text-secondary">ADR: {{ client.adr }}</div>
-        <div class="container w-25 text-secondary">MOB: {{ client.mob }}</div>
+        <div class="container w-25 text-secondary">TEL: {{ client.mob }}</div>
     </div>
 </div>
 {% endfor %}

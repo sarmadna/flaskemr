@@ -2,78 +2,99 @@ from flask import render_template, request, redirect
 from flaskemr import app, db
 from flaskemr.models import Client, Visit
 
+
+# --- this section renders the homepage
 @app.route("/")
 def home():
     return render_template("home.html", title="Home")
 
+
+# --- this section shows all clients also filters clients by firstname
 @app.route("/all-clients", methods=["GET", "POST"])
-def allclients():
-    all_clients = Client.query.all()
+def allClients():
     if request.method == "POST":
-        fnm = request.form["fnm"]
-        all_clients = Client.query.filter_by(fnm=fnm).all()
-        return render_template("all-clients.html", title="All Clients", all_clients=all_clients)
+        fnm = request.form.get("fnm", "").strip()
+        all_clients = Client.query.filter(Client.fnm.ilike(f"{fnm}%")).all()
+    else:
+        all_clients = Client.query.all()
 
-    return render_template("all-clients.html", title="All Clients", all_clients=all_clients)
+    return render_template("all-clients.html", title="Clients", all_clients=all_clients)
 
+
+# --- this section renders new client form
 @app.route("/new-client")
-def newclient():
+def newClient():
     return render_template("new-client.html", title="New Client")
 
-@app.route("/new-client-form", methods=["GET", "POST"])
-def newclientform():
-    if request.method == "POST":
-        fnm = request.form["fnm"]
-        mnm = request.form["mnm"]
-        lnm = request.form["lnm"]
-        sex = request.form["sex"]
-        dob = request.form["dob"]
-        adr = request.form["adr"]
-        mob = request.form["mob"]
-        new_client = Client(fnm, mnm, lnm, sex, dob, adr, mob)
-        db.session.add(new_client)
-        db.session.commit()
-        cid = new_client.pid
-        dov = request.form["dov"]
-        mov = request.form["mov"]
-        yov = request.form["yov"]
-        cc = request.form["cc"]
-        dx = request.form["dx"]
-        rx1 = request.form["rx1"]
-        rx2 = request.form["rx2"]
-        rx3 = request.form["rx3"]
-        rx4 = request.form["rx4"]
-        new_client_first_visit = Visit(cid, dov, mov, yov, cc, dx, rx1, rx2, rx3, rx4)
-        db.session.add(new_client_first_visit)
-        db.session.commit()
-        return redirect("/new-client")
 
-@app.route("/all-visits", methods=["GET", "POST"])
-def all_visits():
-    if request.method == "POST":
-        pid = request.form["pid"]
-        client = Client.query.filter_by(pid=pid).first()
-        all_visits = Visit.query.filter_by(cid=pid).all()
-        return render_template("all-visits.html", title="All Clients", client=client, all_visits=all_visits)
+# --- this section handles new client form data
+@app.route("/new-client-form", methods=["POST"])
+def newClientForm():
+    data = request.form
+    new_client = Client(
+        fnm=data.get("fnm"),
+        mnm=data.get("mnm"),
+        lnm=data.get("lnm"),
+        sex=data.get("sex"),
+        dob=data.get("dob"),
+        adr=data.get("adr"),
+        mob=data.get("mob")
+    )
+    db.session.add(new_client)
+    db.session.commit()
+    return redirect("/new-client")
 
+
+# --- this section deletes client data
+@app.route("/del-client", methods=["POST"])
+def delClient():
+    pid = request.form.get("pid")
+    Visit.query.filter_by(cid=pid).delete()
+    Client.query.filter_by(pid=pid).delete()
+    db.session.commit()
+    return redirect("/all-clients")
+
+
+# --- this section shows all visits of a client
+@app.route("/all-visits", methods=["POST"])
+def allVisits():
+    pid = request.form.get("pid")
+    client = Client.query.filter_by(pid=pid).first()
+    all_visits = Visit.query.filter_by(cid=pid).all()
+    return render_template("all-visits.html", title="Visits", client=client, all_visits=all_visits)
+
+
+# --- this section renders new visit form
 @app.route("/new-visit")
-def newvisit():
+def newVisit():
     return render_template("new-visit.html", title="New Visit")
 
-@app.route("/new-visit-form", methods=["GET", "POST"])
-def newvisitform():
-    if request.method == "POST":
-        cid = request.form["pid"]
-        dov = request.form["dov"]
-        mov = request.form["mov"]
-        yov = request.form["yov"]
-        cc = request.form["cc"]
-        dx = request.form["dx"]
-        rx1 = request.form["rx1"]
-        rx2 = request.form["rx2"]
-        rx3 = request.form["rx3"]
-        rx4 = request.form["rx4"]
-        new_visit = Visit(cid, dov, mov, yov, cc, dx, rx1, rx2, rx3, rx4)
-        db.session.add(new_visit)
-        db.session.commit()
-        return redirect("/new-visit")
+
+# --- this section handles new visit data
+@app.route("/new-visit-form", methods=["POST"])
+def newVisitForm():
+    data = request.form
+    new_visit = Visit(
+        cid=data.get("pid"),
+        dov=data.get("dov"),
+        mov=data.get("mov"),
+        yov=data.get("yov"),
+        cc=data.get("cc"),
+        dx=data.get("dx"),
+        rx1=data.get("rx1"),
+        rx2=data.get("rx2"),
+        rx3=data.get("rx3"),
+        rx4=data.get("rx4")
+    )
+    db.session.add(new_visit)
+    db.session.commit()
+    return redirect("/new-visit")
+
+
+# --- this section deletes a visit
+@app.route("/del-visit", methods=["POST"])
+def delVisit():
+    vid = request.form.get("vid")
+    Visit.query.filter_by(vid=vid).delete()
+    db.session.commit()
+    return redirect("/all-clients")
