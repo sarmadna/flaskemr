@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.roboto-mono-normal {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-size: 13pt;
+  font-weight: normal;
+  font-style: normal;
+}
+
 .left {
     position: fixed;
     left: 0;
@@ -12,4 +22,17 @@
     left: 250px;
     right: 0;
     top: 0;
+}
+
+.no-link-underline {
+    text-decoration: none;
+}
+
+.btn-to-link {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: inherit;
 }
