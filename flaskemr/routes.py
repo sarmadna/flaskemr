@@ -1,16 +1,16 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 from flaskemr import app, db
 from flaskemr.models import Client, Visit
 
 
-# --- this section renders the homepage
+# --- this section shows the homepage
 @app.route("/")
 def home():
     return render_template("home.html", title="Home")
 
 
 # --- this section shows all clients also filters clients by firstname
-@app.route("/all-clients", methods=["GET", "POST"])
+@app.route("/clients", methods=["GET", "POST"])
 def allClients():
     if request.method == "POST":
         fnm = request.form.get("fnm", "").strip()
@@ -21,8 +21,8 @@ def allClients():
     return render_template("all-clients.html", title="Clients", all_clients=all_clients)
 
 
-# --- this section renders new client form
-@app.route("/new-client")
+# --- this section shows new client form
+@app.route("/clients/new")
 def newClient():
     return render_template("new-client.html", title="New Client")
 
@@ -42,38 +42,54 @@ def newClientForm():
     )
     db.session.add(new_client)
     db.session.commit()
-    return redirect("/new-client")
+    pid=new_client.pid
+    return redirect(f"/clients/{pid}")
+
+
+# --- this section shows client profile
+@app.route("/clients/<int:pid>")
+def clientProfile(pid):
+    client = Client.query.get_or_404(pid)
+    return render_template(
+        "client-profile.html",
+        title="Client Profile",
+        client=client
+    )
 
 
 # --- this section deletes client data
-@app.route("/del-client", methods=["POST"])
-def delClient():
-    pid = request.form.get("pid")
-    Visit.query.filter_by(cid=pid).delete()
-    Client.query.filter_by(pid=pid).delete()
+@app.route("/clients/<int:pid>/remove", methods=["POST"])
+def delClient(pid):
+    deleted_client = Client.query.get_or_404(pid)
+    db.session.delete(deleted_client)
     db.session.commit()
-    return redirect("/all-clients")
+    return redirect(url_for("allClients"))
 
 
 # --- this section shows all visits of a client
-@app.route("/all-visits", methods=["POST"])
-def allVisits():
-    pid = request.form.get("pid")
-    client = Client.query.filter_by(pid=pid).first()
-    all_visits = Visit.query.filter_by(cid=pid).all()
+@app.route("/clients/<int:pid>/visits")
+def allVisits(pid):
+    client = Client.query.get_or_404(pid)
+    all_visits = Visit.query.filter_by(cid=pid).order_by(Visit.vid.desc()).all()
     return render_template("all-visits.html", title="Visits", client=client, all_visits=all_visits)
 
 
-# --- this section renders new visit form
-@app.route("/new-visit")
-def newVisit():
-    return render_template("new-visit.html", title="New Visit")
+# --- this section shows new visit form
+@app.route("/clients/<int:pid>/visits/new")
+def newVisit(pid):
+    client = Client.query.get_or_404(pid)
+    return render_template(
+        "new-visit.html",
+        title="New Visit",
+        client=client
+    )
 
 
 # --- this section handles new visit data
 @app.route("/new-visit-form", methods=["POST"])
 def newVisitForm():
     data = request.form
+    pid = int(data.get("pid"))
     new_visit = Visit(
         cid=data.get("pid"),
         dov=data.get("dov"),
@@ -88,13 +104,13 @@ def newVisitForm():
     )
     db.session.add(new_visit)
     db.session.commit()
-    return redirect("/new-visit")
+    return redirect(url_for("allVisits", pid=pid))
 
 
 # --- this section deletes a visit
-@app.route("/del-visit", methods=["POST"])
-def delVisit():
-    vid = request.form.get("vid")
-    Visit.query.filter_by(vid=vid).delete()
+@app.route("/clients/<int:pid>/visits/remove/<int:vid>", methods=["POST"])
+def delVisit(pid, vid):
+    deleted_visit = Visit.query.get_or_404(vid)
+    db.session.delete(deleted_visit)
     db.session.commit()
-    return redirect("/all-clients")
+    return redirect(f"/clients/{pid}/visits")
