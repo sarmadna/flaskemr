@@ -1,30 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-
 {% for client in all_clients %}
-<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
-    <div class="d-flex flex-row border-bottom border-1">
-        <div class="container w-50">
-            <div class="d-flex flex-row">
-                <div class="fs-4 text-secondary mx-2">{{ client.pid }}</div>
-                <div class="fs-4 text-primary mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
+<a href="/clients/{{ client.pid }}/visits" class="no-link-underline">
+    <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+        <div class="d-flex flex-row">
+            <div class="container w-50">
+                <div class="d-flex flex-row">
+                    <div class="text-black mx-2">{{ client.pid }}</div>
+                    <div class="mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
+                </div>
             </div>
-        </div>
-        <div class="container w-50">
-            <div class="d-flex flex-row-reverse">
-                <form action="/all-visits" method="POST">
-                    <input type="text" name="pid" id="pid" class="form-control-sm d-none" value="{{ client.pid }}">
-                    <button type="submit" class="btn btn-sm"><i class="bi bi-info-square fs-4"></i></button>
-                </form>
+            <div class="container w-50">
+                <div class="d-flex flex-row-reverse">
+                    <i class="bi bi-info-circle"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row justify-content-center align-items-center">
-        <div class="container w-25 text-secondary">SEX: {{ client.sex }}</div>
-        <div class="container w-25 text-secondary">DOB: {{ client.dob }}</div>
-        <div class="container w-25 text-secondary">ADR: {{ client.adr }}</div>
-        <div class="container w-25 text-secondary">TEL: {{ client.mob }}</div>
-    </div>
-</div>
+</a>
 {% endfor %}
 {% endblock content %}
