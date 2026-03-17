@@ -6,14 +6,14 @@ class Client(db.Model):
     __tablename__ = "client"
 
     pid = db.Column(db.Integer, primary_key=True)
-    fnm = db.Column(db.String(20), nullable=False)
+    fnm = db.Column(db.String(20), nullable=False, index=True)
     mnm = db.Column(db.String(20), nullable=False)
     lnm = db.Column(db.String(20), nullable=False)
     sex = db.Column(db.String(20), nullable=False)
     dob = db.Column(db.Integer, nullable=False)
     adr = db.Column(db.String(20), nullable=False)
     mob = db.Column(db.String(20), nullable=False)
-    visits = db.relationship("Visit")
+    visits = db.relationship("Visit", backref="client", cascade="all, delete")
 
     def __init__(self, fnm, mnm, lnm, sex, dob, adr, mob):
         self.fnm = fnm
