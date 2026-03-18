@@ -3,7 +3,7 @@ from flaskemr import db
 
 # --- creates table for clients
 class Client(db.Model):
-    __tablename__ = "client"
+    __tablename__ = "clients"
 
     pid = db.Column(db.Integer, primary_key=True)
     fnm = db.Column(db.String(20), nullable=False, index=True)
@@ -12,28 +12,28 @@ class Client(db.Model):
     sex = db.Column(db.String(20), nullable=False)
     dob = db.Column(db.Integer, nullable=False)
     adr = db.Column(db.String(20), nullable=False)
-    mob = db.Column(db.String(20), nullable=False)
-    visits = db.relationship("Visit", backref="client", cascade="all, delete")
+    tel = db.Column(db.String(20), nullable=False)
+    visits = db.relationship("Visit", backref="clients", cascade="all, delete")
 
-    def __init__(self, fnm, mnm, lnm, sex, dob, adr, mob):
+    def __init__(self, fnm, mnm, lnm, sex, dob, adr, tel):
         self.fnm = fnm
         self.mnm = mnm
         self.lnm = lnm
         self.sex = sex
         self.dob = dob
         self.adr = adr
-        self.mob = mob
+        self.tel = tel
 
     def __repr__(self):
-        return f"Client({self.fnm}, {self.mnm}, {self.lnm}, {self.sex}, {self.dob}, {self.adr}, {self.mob})"
+        return f"Client({self.fnm}, {self.mnm}, {self.lnm}, {self.sex}, {self.dob}, {self.adr}, {self.tel})"
 
 
 # --- create table for visits
 class Visit(db.Model):
-    __tablename__ = "visit"
+    __tablename__ = "visits"
 
     vid = db.Column(db.Integer, primary_key=True)
-    cid = db.Column(db.Integer, db.ForeignKey("client.pid"), nullable=False)
+    cid = db.Column(db.Integer, db.ForeignKey("clients.pid"), nullable=False)
     dov = db.Column(db.Integer, nullable=False)
     mov = db.Column(db.Integer, nullable=False)
     yov = db.Column(db.Integer, nullable=False)

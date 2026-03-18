@@ -24,15 +24,7 @@
     top: 0;
 }
 
-.no-link-underline {
-    text-decoration: none;
-}
-
-.btn-to-link {
-    background: none;
-    border: none;
-    color: blue;
-    text-decoration: none;
-    cursor: pointer;
-    font-size: inherit;
+* {
+    font-family: "Roboto Mono", monospace;
+    font-weight: 300;
 }

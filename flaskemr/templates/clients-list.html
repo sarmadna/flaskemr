@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for client in all_clients %}
+<a href="{{ url_for('visits_list', pid=client.pid) }}" class="text-decoration-none">
+    <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+        <div class="d-flex flex-row">
+            <div class="container w-50">
+                <div class="d-flex flex-row">
+                    <div class="text-black mx-2">{{ client.pid }}</div>
+                    <div class="mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
+                </div>
+            </div>
+            <div class="container w-50">
+                <div class="d-flex flex-row-reverse">
+                    [ i ]
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock content %}
