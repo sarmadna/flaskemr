@@ -46,11 +46,10 @@
         </div>
             {% if title == "Clients" %}
              <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
-                <form action="{{ url_for('clients_list') }}" method="post">
+                <form action="{{ url_for('clients_list') }}" method="POST">
                     <div class="input-group">
-                        <label for="fnmSearch" class="input-group-text">Search by first name</label>
-                        <input type="text" name="fnmSearch" id="fnmSearch" class="form-control">
-                        <button type="submit" class="btn btn-outline-dark"><i class="bi bi-search"></i></button>
+                        <input type="text" name="fnm" id="fnm" class="form-control" placeholder="Search by first name">
+                        <button type="submit" class="btn btn-outline-primary">Go</button>
                     </div>
                 </form>
             </div>
@@ -62,7 +61,7 @@
         const params = new URLSearchParams(window.location.search);
 
         if (params.get("search") === "1") {
-            const input = document.getElementById("fnmSearch");
+            const input = document.getElementById("fnm");
             if (input) {
                 input.focus();
             }
