@@ -11,6 +11,7 @@
     <title>EMR | {{ title }}</title>
 </head>
 <body>
+    <!-- left pane -->
     <div class="left">
         <div class="container-fluid h-100 p-4 d-print-none">
             <div class="d-flex flex-column h-25 align-items-center">
@@ -32,6 +33,7 @@
         </div>
     </div>
     <div class="main">
+        <!-- top bar -->
         <div class="d-flex flex-column bg-light shadow py-2 px-4 mb-4 sticky-top">
             <div class="d-flex flex-row align-content-center justify-content-center">
                 <div class="d-flex flex-column justify-content-center w-50">
@@ -44,16 +46,7 @@
                 </div>
             </div>
         </div>
-            {% if title == "Clients" %}
-             <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
-                <form action="{{ url_for('clients_list') }}" method="POST">
-                    <div class="input-group">
-                        <input type="text" name="fnm" id="fnm" class="form-control" placeholder="Search by first name">
-                        <button type="submit" class="btn btn-outline-primary">Go</button>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
+        <!-- contents goes here -->
         {% block content %}{% endblock content %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

@@ -1,61 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
-
 <!-- this section displays client information -->
-    <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
-        <div class="d-flex flex-row border-bottom border-1">
-            <div class="container w-50">
-                <div class="d-flex flex-row">
-                    <div class="text-black mx-2">{{ client.pid }}</div>
-                    <div class="mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
-                </div>
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+    <div class="d-flex flex-row">
+        <div class="d-flex flex-column w-100">
+            <div class="input-group p-2">
+                <input type="text" class="form-control" value="{{ client.display_pid + ' ' +  client.fnm + ' ' + client.mnm + ' ' + client.lnm  }}" readonly>
             </div>
-            <div class="container w-50">
-                <div class="d-flex flex-row-reverse">
-                    <a href="{{ url_for('clients_profile', pid=client.pid) }}" class="btn btn-sm text-primary">[ Profile ]</a>
-                    <a href="{{ url_for('visits_add', pid=client.pid) }}" class="btn btn-sm text-primary">[ Add ]</a>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-row">
-            <div class="container w-25 text-secondary">SEX: {{ client.sex }}</div>
-            <div class="container w-25 text-secondary">DOB: {{ client.dob }}</div>
-            <div class="container w-25 text-secondary">ADR: {{ client.adr }}</div>
-            <div class="container w-25 text-secondary">TEL: {{ client.tel }}</div>
         </div>
     </div>
-
+    <div class="d-flex flex-row align-items-center justify-content-center p-2">
+        <div class="px-2"><a href="{{ url_for('clients_list') }}" class="btn btn-outline-primary" style="width: 150px;">Back</a></div>
+        <div class="px-2"><a href="{{ url_for('visits_add', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Add visits</a></div>
+        <div class="px-2"><a href="{{ url_for('clients_profile', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Profile</a></div>
+    </div>
+</div>
 <!-- this section displays number of visits for the client -->
 {% for visit in all_visits %}
 <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
-    <div class="d-flex flex-row border-bottom border-1">
-        <div class="container w-50">
-            <div class="d-flex flex-row">
-                <div>Visit ID: {{ visit.vid }}</div>
+    <a href="{{ url_for('visits_card', pid=visit.client.pid, vid=visit.vid) }}" class="text-decoration-none">
+        <div class="d-flex flex-row border-bottom border-1">
+            <div class="d-flex flex-row w-50 text-body">
+                <div class="p-2">{{ visit.display_vid }}</div>
+            </div>
+            <div class="d-flex flex-row-reverse w-50">
+                <div class="p-2">[ Click to view ]</div>
             </div>
         </div>
-        <div class="container w-50">
-            <div class="d-flex flex-row-reverse">
-                <form action="{{ url_for('visits_remove', pid=client.pid, vid=visit.vid) }}" method="POST" onsubmit="return confirm('This will delete the selected visit.')">
-                    <button class="btn btn-sm text-danger">[ Remove ]</button>
-                </form>
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column w-50 text-body">
+                <div class="px-2">Date: {{ visit.dat }}</div>
+                <div class="px-2">Age: {{ visit.dat.year - visit.client.dob.year }}</div>
+                <div class="px-2">CCC: {{ visit.ccc }}</div>
+                <div class="px-2">DXX: {{ visit.dxx }}</div>
+            </div>
+            <div class="d-flex flex-column w-50 text-body">
+                <div class="px-2">Rx1: {{ visit.rx1 }}</div>
+                <div class="px-2">Rx2: {{ visit.rx2 }}</div>
+                <div class="px-2">Rx3: {{ visit.rx3 }}</div>
+                <div class="px-2">Rx4: {{ visit.rx4 }}</div>
             </div>
         </div>
-    </div>
-    <div class="d-flex flex-row">
-        <div class="container w-50 text-secondary">
-            <div>DATE: {{ visit.dov }}-{{ visit.mov }}-{{ visit.yov }}</div>
-            <div>AGE: {{ visit.yov - client.dob }}</div>
-            <div>CC: {{ visit.cc }}</div>
-            <div>DX: {{ visit.dx }}</div>
-        </div>
-        <div class="container w-50 text-secondary">
-            <div>RX1: {{ visit.rx1 }}</div>
-            <div>RX2: {{ visit.rx2 }}</div>
-            <div>RX3: {{ visit.rx3 }}</div>
-            <div>RX4: {{ visit.rx4 }}</div>
-        </div>
-    </div>
+    </a>
 </div>
 {% endfor %}
 {% endblock content %}

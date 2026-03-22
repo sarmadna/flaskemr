@@ -1,22 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
+<!-- div for the search bar -->
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+    <form action="{{ url_for('clients_list') }}" method="POST">
+        <div class="input-group p-2">
+            <input type="text" name="fnm" id="fnm" class="form-control" placeholder="Search by first name">
+            <button type="submit" class="btn btn-outline-primary">Go</button>
+        </div>
+    </form>
+</div>
+<!-- div for list of clients -->
 {% for client in all_clients %}
-<a href="{{ url_for('visits_list', pid=client.pid) }}" class="text-decoration-none">
-    <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+    <a href="{{ url_for('visits_list', pid=client.pid) }}" class="text-decoration-none">
         <div class="d-flex flex-row">
             <div class="container w-50">
                 <div class="d-flex flex-row">
-                    <div class="text-black mx-2">{{ client.pid }}</div>
+                    <div class="text-black mx-2">{{ client.display_pid }}</div>
                     <div class="mx-2">{{ client.fnm+" "+client.mnm+" "+client.lnm }}</div>
                 </div>
             </div>
             <div class="container w-50">
                 <div class="d-flex flex-row-reverse">
-                    [i]
+                    [ i ]
                 </div>
             </div>
         </div>
-    </div>
-</a>
+    </a>
+</div>
 {% endfor %}
 {% endblock content %}

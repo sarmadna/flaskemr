@@ -2,30 +2,30 @@
 {% block content %}
 <div class="d-flex flex-column align-items-center justify-content-center">
     <div class="d-flex flex-row w-75 m-0 p-0">
-        <div class="d-flex flex-row w-50 bg-white rounded-2 shadow p-2 ms-4 me-3 border-bottom border-1 border-secondary">
-            <div class="d-flex flex-row w-50 mx-2 fs-4">Total<br>Clients</div>
+        <div class="d-flex flex-row w-50 bg-white rounded-2 shadow p-2 ms-4 me-2 border-bottom border-1 border-secondary">
+            <div class="d-flex flex-row w-50 mx-2 fs-5">Total<br>Clients</div>
             <div class="d-flex flex-row-reverse w-50 mx-2" style="font-size: 4rem;">{{ total_clients }}</div>
         </div>
-        <div class="d-flex flex-row w-50 bg-white rounded-2 shadow p-2 ms-3 me-4 border-bottom border-1 border-secondary">
-            <div class="d-flex flex-row w-50 mx-2 fs-4">Total<br>Visits</div>
+        <div class="d-flex flex-row w-50 bg-white rounded-2 shadow p-2 ms-2 me-4 border-bottom border-1 border-secondary">
+            <div class="d-flex flex-row w-50 mx-2 fs-5">Total<br>Visits</div>
             <div class="d-flex flex-row-reverse w-50 mx-2" style="font-size: 4rem;">{{ total_visits }}</div>
         </div>
     </div>
     <div class="d-flex flex-column w-75 m-0 p-0">
-        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-4 border-bottom border-1 border-secondary">
-            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-4">
+        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-2 border-bottom border-1 border-secondary">
+            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-5">
                 Quick actions
             </div>
-            <div class="d-flex flex-row mx-2 my-2 justify-content-between">
-                <a href="{{ url_for('clients_list') }}" class="btn btn-outline-dark" style="width: 200px;">List Clients</a>
-                <a href="{{ url_for('clients_add') }}" class="btn btn-outline-dark" style="width: 200px;">Add Clients</a>
-                <a href="{{ url_for('clients_list') }}?search=1" class="btn btn-outline-dark" style="width: 200px;">Search Clients</a>
+            <div class="d-flex flex-row mx-2 my-2 justify-content-center">
+                <div class="px-2"><a href="{{ url_for('clients_list') }}" class="btn btn-outline-dark" style="width: 150px;">List Clients</a></div>
+                <div class="px-2"><a href="{{ url_for('clients_add') }}" class="btn btn-outline-dark" style="width: 150px;">Add Clients</a></div>
+                <div class="px-2"><a href="{{ url_for('clients_list') }}?search=1" class="btn btn-outline-dark" style="width: 150px;">Search Clients</a></div>
             </div>
         </div>
     </div>
     <div class="d-flex flex-column w-75 m-0 p-0">
-        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-4 border-bottom border-1 border-secondary">
-            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-4">
+        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-2 border-bottom border-1 border-secondary">
+            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-5">
                 Recent Clients
             </div>
             <div class="d-flex flex-column mx-2 justify-content-between">
@@ -41,20 +41,21 @@
         </div>
     </div>
     <div class="d-flex flex-column w-75 m-0 p-0">
-        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-4 border-bottom border-1 border-secondary">
-            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-4">
+        <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 mt-2 border-bottom border-1 border-secondary">
+            <div class="d-flex flex-row mx-2 my-2 border-bottom border-1 fs-5">
                 Recent Visits
             </div>
             <div class="d-flex flex-column mx-2 justify-content-between">
                 {% for visit in recent_visits %}
+                <a href="{{ url_for('visits_card', pid=visit.client.pid, vid=visit.vid) }}" class="text-decoration-none">
                 <div>
-                        [ {{ visit.clients.fnm + " " + visit.clients.mnm + " " + visit.clients.lnm }} - {{ visit.cc }} ]
+                        [ {{ visit.client.fnm + " " + visit.client.mnm + " " + visit.client.lnm }} - {{ visit.ccc }} ]
                 </div>
+                </a>
                 {% endfor %}
             </div>
 
         </div>
     </div>
-
 </div>
 {% endblock content %}

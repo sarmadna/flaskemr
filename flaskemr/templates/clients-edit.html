@@ -2,51 +2,59 @@
 {% block content %}
 <!-- div for white card -->
 <div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+            <form action="{{ url_for('clients_edit', pid=client.pid) }}" method="POST">
     <div class="d-flex flex-row">
         <!-- left side of card -->
         <div class="d-flex flex-column w-50">
             <div class="input-group p-2">
                 <label class="input-group-text" style="width: 150px;">Client ID</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.display_pid }}" readonly>
+                <input type="text" class="form-control" value="{{ client.display_pid }}" readonly>
             </div>
             <div class="input-group p-2">
                 <label for="fnm" class="input-group-text" style="width: 150px;">First name</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.fnm }}" readonly>
+                <input type="text" name="fnm" id="fnm" class="form-control" value="{{ client.fnm }}" required>
             </div>
             <div class="input-group p-2">
                 <label for="mnm" class="input-group-text" style="width: 150px;">Middle name</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.mnm }}" readonly>
+                <input type="text" name="mnm" id="mnm" class="form-control" value="{{ client.mnm }}" required>
             </div>
             <div class="input-group p-2">
                 <label for="lnm" class="input-group-text" style="width: 150px;">Last name</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.lnm }}" readonly>
+                <input type="text" name="lnm" id="lnm" class="form-control" value="{{ client.lnm }}" required>
             </div>
         </div>
         <!-- right side of card -->
         <div class="d-flex flex-column w-50">
             <div class="input-group p-2">
                 <label for="sex" class="input-group-text" style="width: 150px;">Sex</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.sex }}" readonly>
+                <input type="text" name="sex" id="sex" class="form-control" value="{{ client.sex }}" required>
             </div>
             <div class="input-group p-2">
                 <label for="dob" class="input-group-text" style="width: 150px;">Date of birth</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.dob }}" readonly>
+                <input type="date" name="dob" id="dob" class="form-control" value="{{ client.dob.strftime('%Y-%m-%d') }}" required>
             </div>
             <div class="input-group p-2">
                 <label for="adr" class="input-group-text" style="width: 150px;">Address</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.adr }}" readonly>
+                <input type="text" name="adr" id="adr" class="form-control" value="{{ client.adr }}" required>
             </div>
             <div class="input-group p-2">
                 <label for="tel" class="input-group-text" style="width: 150px;">Phone</label>
-                <input type="text" class="form-control text-secondary" value="{{ client.tel }}" readonly>
+                <input type="text" name="tel" id="tel" class="form-control" value="{{ client.tel }}" required>
             </div>
         </div>
     </div>
     <!-- buttons section -->
     <div class="d-flex flex-row align-items-center justify-content-center p-2">
-        <div class="px-2"><a href="{{ url_for('visits_list', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Back</a></div>
-        <div class="px-2"><a href="{{ url_for('visits_add', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Add Visits</a></div>
-        <div class="px-2"><a href="{{ url_for('clients_edit', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Edit Client</a></div>
+        <div class="px-2"><a href="{{ url_for('clients_profile', pid=client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Back</a></div>
+        <div class="px-2">
+                <button class="btn btn-outline-primary" style="width: 150px;">Update</button>
+        </div>
+            </form>
+        <div class="px-2">
+            <form action="{{ url_for('clients_remove', pid=client.pid) }}" method="POST" onsubmit="return confirm('Do you want to delete client?')">
+                <button class="btn btn-outline-danger" style="width: 150px;">Remove</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock content %}
