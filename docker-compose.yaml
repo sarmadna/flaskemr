@@ -1,0 +1,18 @@
+services:
+  emr:
+    image: flaskemr:latest
+    container_name: emr-cont
+    ports:
+      - 8080:8080
+    volumes:
+      - /Users/sarmad/Dockers/emr-app:/usr/src/app:rw
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost/health"]
+      interval: 30s
+      timeout: 15s
+
+networks:
+  default:
+    name: macbook
+    external: true
