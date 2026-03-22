@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- div for white card -->
+<div class="d-flex flex-column bg-white rounded-2 shadow p-2 mx-4 my-2 border-bottom border-1 border-secondary">
+    <div class="d-flex flex-row">
+        <!-- left side of card -->
+        <div class="d-flex flex-column w-50">
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Visit ID</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.display_vid }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Date</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.dat }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Complaint</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.ccc }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Diagnosis</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.dxx }}" readonly>
+            </div>
+        </div>
+        <!-- right side of card -->
+        <div class="d-flex flex-column w-50">
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Rx1</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.rx1 }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Rx2</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.rx2 }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Rx3</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.rx3 }}" readonly>
+            </div>
+            <div class="input-group p-2">
+                <label class="input-group-text" style="width: 150px;">Rx4</label>
+                <input type="text" class="form-control text-secondary" value="{{ visit.rx4 }}" readonly>
+            </div>
+        </div>
+    </div>
+    <!-- submit button section -->
+    <div class="d-flex flex-row justify-content-center align-items-center p-2">
+        <div class="px-2"><a href="{{ url_for('visits_list', pid=visit.client.pid) }}" class="btn btn-outline-primary" style="width: 150px;">Back</a></div>
+        <div class="px-2"><a href="{{ url_for('visits_edit', pid=visit.client.pid, vid=visit.vid) }}" class="btn btn-outline-primary" style="width: 150px;">Edit</a></div>
+    </div>
+</div>
+{% endblock content %}
